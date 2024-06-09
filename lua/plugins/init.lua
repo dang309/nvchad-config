@@ -26,10 +26,7 @@ local plugins = {
 
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre", -- uncomment for format on save
-    config = function()
-      require "configs.conform"
-    end,
+    enabled = false,
   },
 
   {
@@ -108,36 +105,21 @@ local plugins = {
     "folke/noice.nvim",
     event = "VeryLazy",
     opts = {
-      -- add any options here
-      views = {
-        cmdline_popup = {
-          position = {
-            row = "50%",
-            col = "50%",
-          },
-          size = {
-            width = 64,
-            height = "auto",
-          },
-        },
-      },
-
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-        },
-        signature = {
-          enabled = false,
+          ["cmp.entry.get_documentation"] = true
         },
         hover = {
           enabled = false,
+          silent = true
         },
-        progress = {
+        signature = {
           enabled = false,
-        },
+          silent = true
+        }
       },
       -- you can enable a preset for easier configuration
       presets = {
@@ -158,9 +140,12 @@ local plugins = {
         "rcarriga/nvim-notify",
         opts = {
           background_colour = "#000000",
+          render = "wrapped-compact",
+          max_width = 56,
+          top_down = false,
         },
       },
-    },
+    }
   },
 
   {
@@ -242,6 +227,18 @@ local plugins = {
       },
     },
   },
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = "kevinhwang91/promise-async",
+  },
+  {
+    "nvimtools/none-ls.nvim",
+    config = function()
+      require('configs.null-ls')
+    end,
+    dependencies = { "nvim-lua/plenary.nvim" },
+  }
+
 }
 
 return plugins
